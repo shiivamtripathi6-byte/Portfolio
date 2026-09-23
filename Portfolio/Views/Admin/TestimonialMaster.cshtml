@@ -1,0 +1,175 @@
+﻿@model Portfolio.Models.testimonialMaster
+@{
+    ViewBag.Title = Model == null || Model.id == 0 ? "Add Testimonial" : "Edit Testimonial";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid px-3">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-1">
+                @(Model == null || Model.id == 0 ? "Add Testimonial" : "Edit Testimonial")
+            </h3>
+
+            <p class="text-muted mb-0">
+                Manage client testimonials for your portfolio.
+            </p>
+        </div>
+
+        <a href="@Url.Action("showTestimonial", "Admin")" class="btn btn-secondary">
+            <i class="bi bi-arrow-left me-1"></i>
+            Back
+        </a>
+    </div>
+
+    <!-- Form -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+
+            @using (Html.BeginForm("TestimonialMaster", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.id)
+
+            <div class="row g-3">
+                <!-- Client Name -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Client Name
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    @Html.TextBoxFor(model => model.clientName, new { @class = "form-control", placeholder = "Enter client name" })
+                    @Html.ValidationMessageFor(model => model.clientName, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Designation -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Designation
+                    </label>
+
+                    @Html.TextBoxFor(model => model.designation, new { @class = "form-control", placeholder = "e.g. CEO, Manager, Developer" })
+                    @Html.ValidationMessageFor(model => model.designation, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Company Name -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Company Name
+                    </label>
+
+                    @Html.TextBoxFor(model => model.companyName, new { @class = "form-control", placeholder = "Enter company name" })
+                    @Html.ValidationMessageFor(model => model.companyName, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Rating -->
+
+                <div class="col-md-3">
+                    <label class="form-label">
+                        Rating
+                    </label>
+
+                    @Html.DropDownListFor(model => model.rating, new SelectList(
+                            new[]
+                            {
+                                new { Value = "1", Text = "1 Star" },
+                                new { Value = "2", Text = "2 Stars" },
+                                new { Value = "3", Text = "3 Stars" },
+                                new { Value = "4", Text = "4 Stars" },
+                                new { Value = "5", Text = "5 Stars" }
+                            },
+                            "Value",
+                            "Text",
+                            Model == null ? "5" : Model.rating.ToString()
+                        ),
+                        "-- Select Rating --",
+                        new { @class = "form-select" }
+                    )
+
+                </div>
+
+
+                <!-- Display Order -->
+
+                <div class="col-md-3">
+                    <label class="form-label">
+                        Display Order
+                    </label>
+                    @Html.TextBoxFor(model => model.displayOrder, new { @class = "form-control", type = "number", min = "0", placeholder = "0" })
+
+                </div>
+
+                <!-- Message -->
+                <div class="col-12">
+                    <label class="form-label">
+                        Testimonial Message
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    @Html.TextAreaFor(model => model.message, new { @class = "form-control", rows = "5", placeholder = "Enter client testimonial..." })
+                    @Html.ValidationMessageFor(model => model.message, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Client Image -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Client Image
+                    </label>
+
+                    <input type="file" name="imageFile" class="form-control" accept="image/*" />
+
+                    <small class="text-muted">
+                        Upload JPG, JPEG, PNG or WEBP image.
+                    </small>
+
+                    @Html.HiddenFor(model => model.clientImage)
+
+                    @if (Model != null && !string.IsNullOrEmpty(Model.clientImage))
+                    {
+                        <div class="mt-2">
+                            <img src="@Url.Content(Model.clientImage)" alt="@Model.clientName" style="width:80px;height:80px;object-fit:cover;border-radius:50%;" />
+                        </div>
+                    }
+                </div>
+                <!-- Status -->
+                <div class="col-md-6">
+                    <label class="form-label d-block">Status</label>
+
+                    <div class="form-check form-switch mt-2">
+                        <input type="checkbox" class="form-check-input" id="statusCheckbox"
+                               @(Model.status == "1" ? "checked" : "") />
+
+                        <label class="form-check-label" for="statusCheckbox">
+                            Active
+                        </label>
+                    </div>
+
+                    <input type="hidden" name="status" id="statusValue" value="@Model.status" />
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-lg me-1"></i>
+
+                        @(Model == null || Model.id == 0 ? "Save Testimonial" : "Update Testimonial")
+                    </button>
+
+                    <a href="@Url.Action("ShowTestimonials", "Admin")" s class="btn btn-light border ms-2">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+            }
+
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById("statusCheckbox").addEventListener("change", function () {
+        document.getElementById("statusValue").value = this.checked ? "1" : "0";
+    });
+</script>
+

@@ -1,0 +1,109 @@
+﻿@model Portfolio.Models.contactMaster
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+<section id="contact" class="py-5">
+    <div class="container">
+
+        <!-- Heading -->
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Get In Touch</h2>
+            <p class="text-muted">
+                Have a project or opportunity in mind? Feel free to contact me.
+            </p>
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8">
+                @if (TempData["Message"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
+                        <i class="bi bi-check-circle me-2"></i> @TempData["Message"]
+                        <button type="button" class="btn-close" onclick="document.getElementById('successAlert').remove();" aria-label="Close"></button>
+                    </div>
+                }
+
+                <!-- Error Message -->
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert">
+                        <i class="bi bi-exclamation-triangle me-2"></i> @TempData["Error"]
+                        <button type="button" class="btn-close" onclick="document.getElementById('errorAlert').remove();" aria-label="Close"></button>
+                    </div>
+                }
+                <!-- Contact Form -->
+                @using (Html.BeginForm("Contact", "Home", FormMethod.Post, new { @class = "contact-form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row g-3">
+                        <!-- Name -->
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Name <span class="text-danger">*</span>
+                            </label>
+                            @Html.TextBoxFor(model => model.name, new { @class = "form-control", placeholder = "Enter your name" })
+                            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Email <span class="text-danger">*</span>
+                            </label>
+
+                            @Html.TextBoxFor(model => model.email, new { @class = "form-control", type = "email", placeholder = "Enter your email" })
+                            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Phone
+                            </label>
+
+                            @Html.TextBoxFor(model => model.phone, new { @class = "form-control", type = "tel", placeholder = "Enter your phone number" })
+                        </div>
+
+                        <!-- Subject -->
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Subject
+                            </label>
+
+                            @Html.TextBoxFor( model => model.subject, new { @class = "form-control", placeholder = "Enter subject" })
+                        </div>
+
+                        <!-- Message -->
+                        <div class="col-12">
+                            <label class="form-label">
+                                Message <span class="text-danger">*</span>
+                            </label>
+
+                            @Html.TextAreaFor(model => model.message, new { @class = "form-control", rows = "6", placeholder = "Write your message..." })
+                            @Html.ValidationMessageFor(model => model.message, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="col-12 text-center mt-3">
+
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="bi bi-send me-1"></i>
+                                Send Message
+                            </button>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+

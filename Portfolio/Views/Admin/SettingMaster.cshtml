@@ -1,0 +1,205 @@
+﻿@model Portfolio.Models.settingMaster
+@{
+    ViewBag.Title = Model == null || Model.id == 0 ? "Add Settings" : "Edit Settings";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid px-3">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-1">@ViewBag.Title</h3>
+            <p class="text-muted mb-0">
+                Manage your portfolio website settings
+            </p>
+        </div>
+
+        <a href="@Url.Action("ShowSettings", "Admin")" class="btn btn-outline-secondary">
+            <i class="bi bi-list me-1"></i>
+            Show Settings
+        </a>
+    </div>
+
+    <!-- Alerts -->
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i>
+            @TempData["Message"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"> </button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-circle me-2"></i>
+            @TempData["Error"]
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert"> </button>
+        </div>
+    }
+
+    <!-- Settings Form -->
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0">
+                <i class="bi bi-gear me-2"></i>
+                Website Settings
+            </h5>
+        </div>
+
+        <div class="card-body">
+            @using (Html.BeginForm("SettingMaster", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(model => model.id)
+                <div class="row g-3">
+
+                    <!-- Site Name -->
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Site Name
+                        </label>
+
+                        @Html.TextBoxFor(model => model.siteName, new { @class = "form-control", placeholder = "Enter site name" })
+                    </div>
+
+                    <!-- Email -->
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Email
+                        </label>
+
+                        @Html.TextBoxFor(model => model.email, new { @class = "form-control", type = "email", placeholder = "Enter email" })
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Phone
+                        </label>
+
+                        @Html.TextBoxFor(model => model.phone, new { @class = "form-control", placeholder = "Enter phone number" })
+                    </div>
+                    <!-- Address -->
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Address
+                        </label>
+
+                        @Html.TextBoxFor(model => model.address, new { @class = "form-control", placeholder = "Enter address" })
+                    </div>
+
+
+                    <!-- Logo -->
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Logo
+                        </label>
+
+                        <input type="file" name="logoFile" class="form-control" accept="image/*" />
+
+                        @if (Model != null && !string.IsNullOrEmpty(Model.logo))
+                        {
+                            <div class="mt-2">
+                                <img src="@Url.Content(Model.logo)" style="max-height:60px; max-width:180px;" class="img-thumbnail" />
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Favicon -->
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Favicon
+                        </label>
+
+                        <input type="file" name="faviconFile" class="form-control" accept="image/*" />
+                        @if (Model != null && !string.IsNullOrEmpty(Model.favicon))
+                        {
+                            <div class="mt-2">
+                                <img src="@Url.Content(Model.favicon)" style="width:40px;height:40px;" class="img-thumbnail" />
+                            </div>
+                        }
+                    </div>
+                    <!-- Resume -->
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Resume / CV
+                        </label>
+
+                        <input type="file" name="resumeFile" class="form-control" accept=".pdf,.doc,.docx" />
+
+                        @if (Model != null &&
+                             !string.IsNullOrEmpty(Model.resume))
+                        {
+                            <div class="mt-2">
+                                <a href="@Url.Content(Model.resume)" target="_blank" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-file-earmark-text me-1"></i>
+                                    View Resume
+                                </a>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Status -->
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Status
+                        </label>
+
+                        @Html.DropDownListFor(model => model.status, new List<SelectListItem>
+                         {
+                                new SelectListItem
+                                {
+                                    Text = "Active",
+                                    Value = "1"
+                                },
+                                new SelectListItem
+                                {
+                                    Text = "Inactive",
+                                    Value = "0"
+                                }
+                            },
+                            new
+                            {
+                                @class = "form-select"
+                            })
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Footer Text
+                        </label>
+
+                        @Html.TextAreaFor(model => model.footerText, new { @class = "form-control", rows = "4", placeholder = "Enter footer text" })
+                    </div>
+
+                    <!-- Copyright -->
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Copyright Text
+                        </label>
+
+                        @Html.TextAreaFor(model => model.copyrightText, new { @class = "form-control", rows = "4", placeholder = "Enter copyright text" })
+                    </div>
+                    <!-- Buttons -->
+                    <div class="col-12 mt-4">
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle me-1"></i>
+                            @(Model == null || Model.id == 0 ? "Save Settings" : "Update Settings")
+                        </button>
+
+                        <a href="@Url.Action("ShowSettings", "Admin")" class="btn btn-outline-secondary ms-2">
+                            Cancel
+                        </a>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

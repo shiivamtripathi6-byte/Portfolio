@@ -1,0 +1,553 @@
+﻿@{
+    ViewBag.Title = ViewBag.Title ?? "Admin Panel";
+    string controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>@ViewBag.Title - Portfolio Admin</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                min-height: 100%;
+            }
+
+            body {
+                background: #f5f6fa;
+                color: #212529;
+                transition: background-color 0.2s ease, color 0.2s ease;
+            }
+
+            /* =========================
+           SIDEBAR
+        ========================= */
+
+            .sidebar {
+                width: 185px;
+                height: 100vh;
+                top: 0;
+                left: 0;
+                z-index: 1030;
+                overflow-y: auto;
+            }
+
+            /* =========================
+           MAIN CONTENT
+        ========================= */
+
+            .main-content {
+                margin-left: 185px;
+                min-height: 100vh;
+            }
+
+            /* =========================
+           TOPBAR
+        ========================= */
+
+            .topbar {
+                height: 64px;
+                position: sticky;
+                top: 0;
+                z-index: 1020;
+            }
+
+            /* =========================
+           SIDEBAR LINKS
+        ========================= */
+
+            .sidebar .nav-link {
+                color: #495057;
+                border-radius: 6px;
+                padding: 9px 12px;
+                margin-bottom: 3px;
+            }
+
+                .sidebar .nav-link:hover,
+                .sidebar .nav-link.active {
+                    background: #0d6efd;
+                    color: #fff;
+                }
+
+            /* =========================
+           ICON BUTTON
+        ========================= */
+
+            .icon-button {
+                width: 38px;
+                height: 38px;
+                border: 1px solid #dee2e6;
+                background: #fff;
+                border-radius: 6px;
+                color: #212529;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+                .icon-button:hover {
+                    background: #f1f3f5;
+                }
+
+            /* =========================
+           DARK THEME
+        ========================= */
+
+            body.dark-theme {
+                background: #0d0d0d;
+                color: #f5f5f5;
+            }
+
+                body.dark-theme .sidebar {
+                    background: #151515 !important;
+                    border-color: #2d2d2d !important;
+                }
+
+                body.dark-theme .topbar {
+                    background: #151515 !important;
+                    border-color: #2d2d2d !important;
+                }
+
+                body.dark-theme .text-muted {
+                    color: #9ca3af !important;
+                }
+
+                body.dark-theme .nav-link {
+                    color: #b8b8b8 !important;
+                }
+
+                    body.dark-theme .nav-link:hover,
+                    body.dark-theme .nav-link.active {
+                        background: #0d6efd !important;
+                        color: #fff !important;
+                    }
+
+                body.dark-theme .icon-button {
+                    background: #1f1f1f;
+                    border-color: #3a3a3a;
+                    color: #fff;
+                }
+
+                body.dark-theme .border-bottom,
+                body.dark-theme .border-top,
+                body.dark-theme .border-end {
+                    border-color: #2d2d2d !important;
+                }
+
+                body.dark-theme h1,
+                body.dark-theme h2,
+                body.dark-theme h3,
+                body.dark-theme h4,
+                body.dark-theme h5,
+                body.dark-theme h6 {
+                    color: #fff;
+                }
+
+                /* Cards */
+
+                body.dark-theme .card {
+                    background: #171717 !important;
+                    color: #f5f5f5;
+                }
+
+                body.dark-theme .card-header {
+                    background: #171717 !important;
+                    border-color: #2d2d2d !important;
+                    color: #fff;
+                }
+
+                /* Inputs */
+
+                body.dark-theme .form-control {
+                    background: #1f1f1f;
+                    color: #fff;
+                    border-color: #3a3a3a;
+                }
+
+                    body.dark-theme .form-control::placeholder {
+                        color: #8b8b8b;
+                    }
+
+                    body.dark-theme .form-control:focus {
+                        background: #1f1f1f;
+                        color: #fff;
+                    }
+
+                body.dark-theme .input-group-text {
+                    background: #1f1f1f;
+                    color: #fff;
+                    border-color: #3a3a3a;
+                }
+
+            /* =========================
+           MOBILE
+        ========================= */
+
+            @@media (max-width: 991px) {
+
+                .sidebar {
+                    width: 185px;
+                }
+
+                .main-content {
+                    margin-left: 185px;
+                }
+            }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar bg-white border-end position-fixed">
+
+        <!-- Logo -->
+        <div class="p-3 border-bottom">
+            <div class="d-flex align-items-center gap-2">
+                <div class="bg-primary text-white rounded p-2">
+                    <i class="bi bi-person-workspace"></i>
+                </div>
+
+                <div>
+                    <h5 class="mb-0">Portfolio</h5>
+                    <small class="text-muted">Admin Panel</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-3">
+
+            <!-- MAIN -->
+            <small class="text-muted fw-bold">
+                MAIN
+            </small>
+
+            <nav class="nav flex-column mt-2">
+
+                <a href="@Url.Action("Dashboard", "Admin")" class="nav-link @(controller == "Admin" ? "active" : "")">
+                    <i class="bi bi-grid me-2"></i>
+                    Dashboard
+                </a>
+
+            </nav>
+
+
+            <!-- PORTFOLIO -->
+            <small class="text-muted fw-bold d-block mt-4">
+                PORTFOLIO
+            </small>
+
+            <nav class="nav flex-column mt-2">
+                <a href="@Url.Action("Index", "Home")"
+                   class="nav-link">
+                    <i class="bi bi-house me-2"></i>
+                    View Website
+                </a>
+
+                <!-- Skills -->
+                <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#skillsMenu" role="button">
+                    <span>
+                        <i class="bi bi-lightning me-2"></i>
+                        Skills
+                    </span>
+                    <i class="bi bi-chevron-down small"></i>
+                </a>
+
+                <div class="collapse ps-3" id="skillsMenu">
+
+                    <a href="@Url.Action("ManageSkills", "Admin", new { id = "" })" class="nav-link small">
+                        <i class="bi bi-plus-circle me-2"></i>
+                        Add Skill
+                    </a>
+
+                    <a href="@Url.Action("ShowSkills", "Admin")" class="nav-link small">
+                        <i class="bi bi-list me-2"></i>
+                        Show Skills
+                    </a>
+
+                </div>
+
+
+                <!-- Projects -->
+                <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#projectsMenu" role="button">
+
+                    <span>
+                        <i class="bi bi-folder me-2"></i>
+                        Projects
+                    </span>
+
+                    <i class="bi bi-chevron-down small"></i>
+                </a>
+
+                <div class="collapse ps-3" id="projectsMenu">
+
+                    <a href="@Url.Action("Projects", "Admin", new { id = "" })" class="nav-link small">
+                        <i class="bi bi-plus-circle me-2"></i>
+                        Add Project
+                    </a>
+
+                    <a href="@Url.Action("ShowProjects", "Admin")" class="nav-link small">
+                        <i class="bi bi-list me-2"></i>
+                        Show Projects
+                    </a>
+
+                </div>
+
+                <!-- Experience -->
+                <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#experienceMenu" role="button">
+                    <span>
+                        <i class="bi bi-briefcase me-2"></i>
+                        Experience
+                    </span>
+                    <i class="bi bi-chevron-down small"></i>
+                </a>
+
+                <div class="collapse ps-3" id="experienceMenu">
+
+                    <a href="@Url.Action("ManageExperience", "Admin", new { id = "" })" class="nav-link small">
+                        <i class="bi bi-plus-circle me-2"></i>
+                        Add Experience
+                    </a>
+
+                    <a href="@Url.Action("ShowExperience", "Admin")" class="nav-link small">
+                        <i class="bi bi-list me-2"></i>
+                        Show Experience
+                    </a>
+
+                </div>
+
+                <!-- Education -->
+                <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#educationMenu" role="button">
+                    <span>
+                        <i class="bi bi-mortarboard me-2"></i>
+                        Education
+                    </span>
+                    <i class="bi bi-chevron-down small"></i>
+                </a>
+
+                <div class="collapse ps-3" id="educationMenu">
+
+                    <a href="@Url.Action("educationMaster", "Admin", new { id = "" })" class="nav-link small">
+                        <i class="bi bi-plus-circle me-2"></i>
+                        Add Education
+                    </a>
+
+                    <a href="@Url.Action("ShowEducation", "Admin")" class="nav-link small">
+                        <i class="bi bi-list me-2"></i>
+                        Show Education
+                    </a>
+
+                </div>
+                <!-- About -->
+                <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#aboutMenu" role="button">
+
+                    <span>
+                        <i class="bi bi-info-circle me-2"></i>
+                        About
+                    </span>
+
+                    <i class="bi bi-chevron-down small"></i>
+                </a>
+
+                <div class="collapse ps-3" id="aboutMenu">
+
+                    <a href="@Url.Action("AboutMaster", "Admin", new { id = "" })" class="nav-link small">
+                        <i class="bi bi-pencil me-2"></i>
+                        Manage About
+                    </a>
+
+                    <a href="@Url.Action("ShowAbout", "Admin")" class="nav-link small">
+                        <i class="bi bi-list me-2"></i>
+                        Show About
+                    </a>
+
+                </div>
+
+                <!-- Services -->
+                <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#servicesMenu" role="button">
+
+                    <span>
+                        <i class="bi bi-layers me-2"></i>
+                        Services
+                    </span>
+
+                    <i class="bi bi-chevron-down small"></i>
+                </a>
+
+                <div class="collapse ps-3" id="servicesMenu">
+
+                    <a href="@Url.Action("ServiceMaster", "Admin", new { id = "" })" class="nav-link small">
+                        <i class="bi bi-plus-circle me-2"></i>
+                        Add Service
+                    </a>
+
+                    <a href="@Url.Action("ShowService", "Admin")" class="nav-link small">
+                        <i class="bi bi-list me-2"></i>
+                        Show Services
+                    </a>
+                </div>
+            </nav>
+            <!-- OTHERS -->
+            <small class="text-muted fw-bold d-block mt-4">
+                OTHERS
+            </small>
+
+            <nav class="nav flex-column mt-2">
+
+                <!-- Contact -->
+                <a href="@Url.Action("ShowContact", "Admin")" class="nav-link">
+                    <i class="bi bi-envelope me-2"></i>
+                    Contact Messages
+                </a>
+
+                <!-- Social Links -->
+                <a href="@Url.Action("SocialLink", "Admin", new { id = "" })" class="nav-link">
+                    <i class="bi bi-share me-2"></i>
+                    Social Links
+                </a>
+
+                <a href="@Url.Action("ShowLinks","Admin")" class="nav-link">
+                    <i class="bi bi-share me-2"></i>
+                    Show Links
+                </a>
+
+                <a href="@Url.Action("TestimonialMaster", "Admin", new { id = "" })" class="nav-link">
+                    <i class="bi bi-feedback me-2"></i>
+                    Testimonial Master
+                </a>
+
+                <a href="@Url.Action("showTestimonial", "Admin")" class="nav-link">
+                    <i class="bi bi-feedback me-2"></i>
+                    Show Testimonial
+                </a>
+
+                <!-- Settings -->
+                <a href="#" class="nav-link">
+                    <i class="bi bi-gear me-2"></i>
+                    Settings
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main-content">
+
+        <!-- Topbar -->
+        <header class="topbar bg-white border-bottom px-4 d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">
+                @ViewBag.Title
+            </h5>
+            <div class="d-flex align-items-center gap-2">
+                <!-- Theme -->
+                <button class="icon-button" type="button" data-theme-toggle aria-label="Switch color theme" title="Switch color theme">
+                    <i class="bi bi-moon-stars" data-theme-icon></i>
+
+                </button>
+                <!-- Notification -->
+                <button class="icon-button" type="button" title="Notifications">
+                    <i class="bi bi-bell"></i>
+                </button>
+
+
+                <!-- Admin -->
+                <div class="d-flex align-items-center ms-2">
+
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width:40px;height:40px;">
+                        A
+                    </div>
+
+                    <div class="ms-2 d-none d-md-block">
+
+                        <strong class="d-block">
+                            Admin
+                        </strong>
+
+                        <small class="text-muted">
+                            Administrator
+                        </small>
+                        
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- Content -->
+        <div class="p-4">
+
+            @RenderBody()
+
+        </div>
+
+    </main>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const button =
+                document.querySelector("[data-theme-toggle]");
+
+            const icon =
+                document.querySelector("[data-theme-icon]");
+
+            if (!button || !icon) {
+                return;
+            }
+
+            const savedTheme =
+                localStorage.getItem("admin-theme") || "light";
+
+            if (savedTheme === "dark") {
+
+                document.body.classList.add("dark-theme");
+
+                icon.classList.remove("bi-moon-stars");
+                icon.classList.add("bi-sun");
+
+            }
+
+            button.addEventListener("click", function () {
+
+                document.body.classList.toggle("dark-theme");
+
+                const isDark =
+                    document.body.classList.contains("dark-theme");
+
+                if (isDark) {
+
+                    icon.classList.remove("bi-moon-stars");
+                    icon.classList.add("bi-sun");
+
+                    localStorage.setItem("admin-theme", "dark");
+                }
+                else {
+
+                    icon.classList.remove("bi-sun");
+                    icon.classList.add("bi-moon-stars");
+
+                    localStorage.setItem("admin-theme", "light");
+                }
+            });
+        });
+
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

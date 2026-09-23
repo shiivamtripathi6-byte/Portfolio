@@ -1,0 +1,1627 @@
+﻿@model Portfolio.Models.HomeViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+<section id="home" class="hero d-flex align-items-center">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7">
+                <p class="text-primary fw-bold mb-2">
+                    HELLO, I'M
+                </p>
+
+                <h1 class="hero-title mb-3">
+                    @(Model.Settings != null && !string.IsNullOrEmpty(Model.Settings.siteName) ? Model.Settings.siteName : "Divyanshi Tripathi")
+                </h1>
+
+                <h3 class="fw-semibold mb-3">
+                    @(Model.About != null ? Model.About.designation : "Full Stack ASP.NET Developer")
+                </h3>
+
+                <p class="lead text-secondary mb-4">
+                    @(Model.About != null
+                        ? Model.About.description
+                        : "I build modern, responsive and user-friendly web applications using ASP.NET MVC, C#, SQL Server, Bootstrap and JavaScript.")
+                </p>
+
+                <div class="d-flex flex-wrap gap-3">
+
+                    <a href="#projects" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-folder2-open me-2"></i>
+                        View Projects
+                    </a>
+
+                    <a href="#contact" class="btn btn-outline-dark btn-lg px-4">
+                        <i class="bi bi-send me-2"></i>
+                        Contact Me
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT -->
+
+            <div class="col-lg-5 text-center">
+
+                @{
+                    string heroImage = Model.About != null
+                        ? Model.About.profileImage
+                        : "";
+                }
+
+                @if (!string.IsNullOrEmpty(heroImage))
+                {
+                    <img src="@Url.Content(heroImage)" class="profile-img rounded-circle shadow-lg img-fluid" alt="Profile" onerror="this.style.display='none';" />
+                }
+                else
+                {
+                    <img src="~/Content/images/profile.jpg" class="profile-img rounded-circle shadow-lg img-fluid" alt="Profile" onerror="this.style.display='none';" />
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about" class="section-padding bg-light">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <p class="text-primary fw-bold mb-2">
+                ABOUT ME
+            </p>
+
+            <h2 class="fw-bold">
+                @(Model.About != null && !string.IsNullOrEmpty(Model.About.heading)
+                    ? Model.About.heading
+                    : "Who I Am")
+            </h2>
+
+            <p class="text-secondary mx-auto"
+               style="max-width:650px;">
+
+                @(Model.About != null
+                    ? Model.About.description
+                    : "A passionate developer focused on creating reliable, scalable and user-friendly web applications.")
+
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-lg-7">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body p-4 p-lg-5">
+
+                        <h4 class="fw-bold mb-3">
+
+                            @(Model.About != null
+                                ? Model.About.designation
+                                : "Full Stack ASP.NET Developer")
+
+                        </h4>
+
+                        <p class="text-secondary lh-lg mb-0">
+
+                            @(Model.About != null
+                                ? Model.About.description
+                                : "I am passionate about developing complete web applications using modern frontend and backend technologies.")
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-5">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body p-4">
+
+                        <h5 class="fw-bold mb-4">
+                            Quick Information
+                        </h5>
+
+                        <div class="row g-3">
+
+                            <div class="col-6">
+
+                                <div class="bg-light rounded p-3">
+
+                                    <small class="text-secondary">
+                                        Role
+                                    </small>
+
+                                    <div class="fw-semibold">
+
+                                        @(Model.About != null
+                                            ? Model.About.designation
+                                            : "ASP.NET Developer")
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-6">
+
+                                <div class="bg-light rounded p-3">
+
+                                    <small class="text-secondary">
+                                        Backend
+                                    </small>
+
+                                    <div class="fw-semibold">
+                                        C# / MVC
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-6">
+
+                                <div class="bg-light rounded p-3">
+
+                                    <small class="text-secondary">
+                                        Database
+                                    </small>
+
+                                    <div class="fw-semibold">
+                                        SQL Server
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-6">
+
+                                <div class="bg-light rounded p-3">
+
+                                    <small class="text-secondary">
+                                        Experience
+                                    </small>
+
+                                    <div class="fw-semibold">
+
+                                        @(Model.About != null
+                                            ? Model.About.experience
+                                            : "Developer")
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SKILLS ================= -->
+
+<section id="skills" class="section-padding">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <p class="text-primary fw-bold mb-2">
+                MY SKILLS
+            </p>
+
+            <h2 class="fw-bold">
+                Technologies I Work With
+            </h2>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            @if (Model.Skills != null && Model.Skills.Rows.Count > 0)
+            {
+                foreach (System.Data.DataRow skill in Model.Skills.Rows)
+                {
+                    <div class="col-md-6 col-lg-3">
+
+                        <div class="card border-0 shadow-sm h-100">
+
+                            <div class="card-body p-4">
+
+                                <div class="skill-icon bg-primary bg-opacity-10
+                                            text-primary rounded mb-3">
+
+                                    <i class="bi bi-code-slash fs-4"></i>
+
+                                </div>
+
+                                <h5 class="fw-bold">
+                                    @skill["SkillName"]
+                                </h5>
+
+                                <p class="text-secondary mb-0">
+
+                                    @skill["Category"]
+
+                                    @if (skill.Table.Columns.Contains("SkillLevel")
+                                        && skill["SkillLevel"] != DBNull.Value
+                                        && !string.IsNullOrEmpty(skill["SkillLevel"].ToString()))
+                                    {
+                                        <span>
+                                            - @skill["SkillLevel"]
+                                        </span>
+                                    }
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center text-secondary">
+                    No skills available.
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================= SERVICES ================= -->
+
+<section id="services" class="section-padding bg-light">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <p class="text-primary fw-bold mb-2">
+                SERVICES
+            </p>
+
+            <h2 class="fw-bold">
+                What I Do
+            </h2>
+
+            <p class="text-secondary mx-auto"
+               style="max-width:650px;">
+                Professional development services focused on building reliable,
+                scalable and user-friendly applications.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            @if (Model.Services != null && Model.Services.Rows.Count > 0)
+            {
+                foreach (System.Data.DataRow service in Model.Services.Rows)
+                {
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="card border-0 shadow-sm h-100">
+
+                            <div class="card-body p-4">
+
+                                <!-- ICON -->
+
+                                <div class="skill-icon bg-primary bg-opacity-10 text-primary rounded mb-3">
+
+                                    @if (service.Table.Columns.Contains("icon")
+                                        && service["icon"] != DBNull.Value
+                                        && !string.IsNullOrWhiteSpace(service["icon"].ToString()))
+                                    {
+                                        <i class="@service["icon"] fs-4"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-code-slash fs-4"></i>
+                                    }
+
+                                </div>
+
+
+                                <!-- SERVICE NAME -->
+
+                                <h5 class="fw-bold mb-3">
+
+                                    @if (service.Table.Columns.Contains("serviceName")
+                                        && service["serviceName"] != DBNull.Value)
+                                    {
+                                        @service["serviceName"]
+                                    }
+
+                                </h5>
+
+
+                                <!-- DESCRIPTION -->
+
+                                @if (service.Table.Columns.Contains("description")
+                                    && service["description"] != DBNull.Value
+                                    && !string.IsNullOrWhiteSpace(service["description"].ToString()))
+                                {
+                                    <p class="text-secondary mb-0">
+                                        @service["description"]
+                                    </p>
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center text-secondary">
+
+                    <i class="bi bi-briefcase fs-1 d-block mb-3"></i>
+
+                    <p class="mb-0">
+                        No services available.
+                    </p>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================= EXPERIENCE ================= -->
+
+<section id="experience" class="section-padding">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <p class="text-primary fw-bold mb-2">
+                EXPERIENCE
+            </p>
+
+            <h2 class="fw-bold">
+                My Professional Journey
+            </h2>
+
+            <p class="text-secondary mx-auto"
+               style="max-width:650px;">
+                A journey of professional experience, learning and building
+                real-world web applications.
+            </p>
+
+        </div>
+
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-10">
+
+                @if (Model.Experience != null && Model.Experience.Rows.Count > 0)
+                {
+                    foreach (System.Data.DataRow experience in Model.Experience.Rows)
+                    {
+                        <div class="card border-0 shadow-sm mb-4">
+
+                            <div class="card-body p-4 p-lg-5">
+
+                                <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+
+                                    <!-- LEFT SIDE -->
+                                    <div>
+
+                                        <h4 class="fw-bold mb-1">
+                                            @experience["JobTitle"]
+                                        </h4>
+
+                                        <div class="text-primary fw-semibold mb-2">
+                                            @experience["CompanyName"]
+                                        </div>
+
+                                        <div class="d-flex flex-wrap gap-3 text-secondary small">
+
+                                            @if (experience.Table.Columns.Contains("Location")
+                                                && experience["Location"] != DBNull.Value
+                                                && !string.IsNullOrWhiteSpace(experience["Location"].ToString()))
+                                            {
+                                                <span>
+                                                    <i class="bi bi-geo-alt me-1"></i>
+                                                    @experience["Location"]
+                                                </span>
+                                            }
+
+                                            @if (experience.Table.Columns.Contains("employmentType")
+                                                && experience["employmentType"] != DBNull.Value
+                                                && !string.IsNullOrWhiteSpace(experience["employmentType"].ToString()))
+                                            {
+                                                <span>
+                                                    <i class="bi bi-briefcase me-1"></i>
+                                                    @experience["employmentType"]
+                                                </span>
+                                            }
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- DATE -->
+                                    <div class="text-md-end">
+
+                                        @{
+                                            string startDateText = "";
+                                            string endDateText = "";
+
+                                            DateTime startDate;
+                                            DateTime endDate;
+
+                                            if (experience.Table.Columns.Contains("StartDate")
+                                                && experience["StartDate"] != DBNull.Value
+                                                && DateTime.TryParse(
+                                                    experience["StartDate"].ToString(),
+                                                    out startDate))
+                                            {
+                                                startDateText = startDate.ToString("dd MMM yyyy");
+                                            }
+
+                                            if (experience.Table.Columns.Contains("EndDate")
+                                                && experience["EndDate"] != DBNull.Value
+                                                && !string.IsNullOrWhiteSpace(experience["EndDate"].ToString())
+                                                && DateTime.TryParse(
+                                                    experience["EndDate"].ToString(),
+                                                    out endDate))
+                                            {
+                                                endDateText = endDate.ToString("dd MMM yyyy");
+                                            }
+                                        }
+
+                                        <span class="badge text-bg-primary px-3 py-2">
+
+                                            @startDateText
+
+                                            -
+
+                                            @if (experience.Table.Columns.Contains("IsCurrent")
+                                                && experience["IsCurrent"] != DBNull.Value
+                                                && Convert.ToBoolean(experience["IsCurrent"]))
+                                            {
+                                                @:Present
+                                            }
+                                            else
+                                            {
+                                                @endDateText
+                                            }
+
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- DESCRIPTION -->
+
+                                @if (experience.Table.Columns.Contains("Description")
+                                    && experience["Description"] != DBNull.Value
+                                    && !string.IsNullOrWhiteSpace(experience["Description"].ToString()))
+                                {
+                                    <div class="mt-4">
+
+                                        <p class="text-secondary lh-lg mb-0">
+                                            @experience["Description"]
+                                        </p>
+
+                                    </div>
+                                }
+
+
+                                <!-- TECHNOLOGIES -->
+
+                                @if (experience.Table.Columns.Contains("Technologies")
+                                    && experience["Technologies"] != DBNull.Value
+                                    && !string.IsNullOrWhiteSpace(experience["Technologies"].ToString()))
+                                {
+                                    <div class="mt-4">
+
+                                        <small class="fw-semibold text-dark d-block mb-2">
+                                            Technologies
+                                        </small>
+
+                                        <div class="d-flex flex-wrap gap-2">
+
+                                            @foreach (string technology in experience["Technologies"].ToString().Split(','))
+                                            {
+                                                if (!string.IsNullOrWhiteSpace(technology))
+                                                {
+                                                    <span class="badge bg-light text-dark border px-3 py-2">
+                                                        @technology.Trim()
+                                                    </span>
+                                                }
+                                            }
+
+                                        </div>
+
+                                    </div>
+                                }
+
+
+                                <!-- COMPANY URL -->
+
+                                @if (experience.Table.Columns.Contains("CompanyUrl")
+                                    && experience["CompanyUrl"] != DBNull.Value
+                                    && !string.IsNullOrWhiteSpace(experience["CompanyUrl"].ToString()))
+                                {
+                                    <div class="mt-4">
+
+                                        <a href="@experience["CompanyUrl"]"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           class="btn btn-outline-primary btn-sm">
+
+                                            <i class="bi bi-box-arrow-up-right me-1"></i>
+                                            Company Website
+
+                                        </a>
+
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="text-center text-secondary py-4">
+
+                        <i class="bi bi-briefcase fs-1 d-block mb-3"></i>
+
+                        <p class="mb-0">
+                            No experience available.
+                        </p>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================= EDUCATION ================= -->
+
+<section id="education" class="section-padding bg-light">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <p class="text-primary fw-bold mb-2">
+                EDUCATION
+            </p>
+
+            <h2 class="fw-bold">
+                My Education
+            </h2>
+
+            <p class="text-secondary mx-auto"
+               style="max-width:650px;">
+                My academic background and educational journey.
+            </p>
+
+        </div>
+
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-10">
+
+                @if (Model.Education != null && Model.Education.Rows.Count > 0)
+                {
+                    foreach (System.Data.DataRow education in Model.Education.Rows)
+                    {
+                        <div class="card border-0 shadow-sm mb-4">
+
+                            <div class="card-body p-4 p-lg-5">
+
+                                <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+
+                                    <!-- LEFT CONTENT -->
+
+                                    <div>
+
+                                        <h4 class="fw-bold mb-1">
+                                            @education["Degree"]
+                                        </h4>
+
+                                        <div class="text-primary fw-semibold mb-2">
+                                            @education["InstitutionName"]
+                                        </div>
+
+
+                                        <!-- LOCATION -->
+
+                                        @if (education.Table.Columns.Contains("Location")
+                                            && education["Location"] != DBNull.Value
+                                            && !string.IsNullOrWhiteSpace(education["Location"].ToString()))
+                                        {
+                                            <div class="text-secondary small">
+
+                                                <i class="bi bi-geo-alt me-1"></i>
+
+                                                @education["Location"]
+
+                                            </div>
+                                        }
+
+                                    </div>
+
+
+                                    <!-- DATE -->
+
+                                    <div class="text-md-end">
+
+                                        @{
+                                            string startDateText = "";
+                                            string endDateText = "";
+
+                                            DateTime startDate;
+                                            DateTime endDate;
+
+                                            if (education.Table.Columns.Contains("StartDate")
+                                                && education["StartDate"] != DBNull.Value
+                                                && DateTime.TryParse(
+                                                    education["StartDate"].ToString(),
+                                                    out startDate))
+                                            {
+                                                startDateText = startDate.ToString("MMM yyyy");
+                                            }
+
+
+                                            if (education.Table.Columns.Contains("EndDate")
+                                                && education["EndDate"] != DBNull.Value
+                                                && !string.IsNullOrWhiteSpace(
+                                                    education["EndDate"].ToString())
+                                                && DateTime.TryParse(
+                                                    education["EndDate"].ToString(),
+                                                    out endDate))
+                                            {
+                                                endDateText = endDate.ToString("MMM yyyy");
+                                            }
+                                        }
+
+                                        @if (!string.IsNullOrEmpty(startDateText)
+                                            || !string.IsNullOrEmpty(endDateText))
+                                        {
+                                            <span class="badge text-bg-primary px-3 py-2">
+
+                                                @startDateText
+
+                                                @if (!string.IsNullOrEmpty(endDateText))
+                                                {
+                                                    @: - @endDateText
+                                                }
+
+                                            </span>
+                                        }
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- DESCRIPTION -->
+
+                                @if (education.Table.Columns.Contains("Description")
+                                    && education["Description"] != DBNull.Value
+                                    && !string.IsNullOrWhiteSpace(
+                                        education["Description"].ToString()))
+                                {
+                                    <div class="mt-4">
+
+                                        <p class="text-secondary lh-lg mb-0">
+                                            @education["Description"]
+                                        </p>
+
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="text-center text-secondary py-4">
+
+                        <i class="bi bi-mortarboard fs-1 d-block mb-3"></i>
+
+                        <p class="mb-0">
+                            No education details available.
+                        </p>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================= PROJECTS ================= -->
+<!-- ================= PROJECTS ================= -->
+
+<section id="projects" class="section-padding">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <p class="text-primary fw-bold mb-2">
+                PORTFOLIO
+            </p>
+
+            <h2 class="fw-bold">
+                Featured Projects
+            </h2>
+
+            <p class="text-secondary mx-auto"
+               style="max-width:650px;">
+                A selection of projects I have built using modern web
+                technologies and development practices.
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            @if (Model.Projects != null && Model.Projects.Rows.Count > 0)
+            {
+                foreach (System.Data.DataRow project in Model.Projects.Rows)
+                {
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="card border-0 shadow-sm h-100 overflow-hidden">
+
+                            <!-- PROJECT IMAGE -->
+
+                            @if (project.Table.Columns.Contains("ProjectImage")
+                                && project["ProjectImage"] != DBNull.Value
+                                && !string.IsNullOrWhiteSpace(
+                                    project["ProjectImage"].ToString())
+                                && !project["ProjectImage"].ToString()
+                                    .Contains("HttpPostedFileWrapper"))
+                            {
+                                <img src="@Url.Content(project["ProjectImage"].ToString())"
+                                     class="card-img-top project-img"
+                                     alt="@project["ProjectName"]"
+                                     loading="lazy"
+                                     style="height:220px; object-fit:cover;" />
+                            }
+                            else
+                            {
+                                <div class="bg-light d-flex align-items-center justify-content-center"
+                                     style="height:220px;">
+
+                                    <i class="bi bi-folder2-open fs-1 text-secondary"></i>
+
+                                </div>
+                            }
+
+                            <!-- PROJECT CONTENT -->
+
+                            <div class="card-body p-4">
+
+                                <h5 class="fw-bold mb-2">
+                                    @project["ProjectName"]
+                                </h5>
+
+                                <!-- DESCRIPTION -->
+
+                                @if (project.Table.Columns.Contains("ShortDescription")
+                                    && project["ShortDescription"] != DBNull.Value
+                                    && !string.IsNullOrWhiteSpace(
+                                        project["ShortDescription"].ToString()))
+                                {
+                                    <p class="text-secondary mb-3">
+                                        @project["ShortDescription"]
+                                    </p>
+                                }
+
+                                <!-- TECHNOLOGIES -->
+
+                                @if (project.Table.Columns.Contains("Technologies")
+                                    && project["Technologies"] != DBNull.Value
+                                    && !string.IsNullOrWhiteSpace(
+                                        project["Technologies"].ToString()))
+                                {
+                                    <div class="d-flex flex-wrap gap-2 mb-4">
+
+                                        @foreach (string technology in project["Technologies"]
+                                            .ToString()
+                                            .Split(','))
+                                        {
+                                            if (!string.IsNullOrWhiteSpace(technology))
+                                            {
+                                                <span class="badge bg-light text-dark border">
+                                                    @technology.Trim()
+                                                </span>
+                                            }
+                                        }
+
+                                    </div>
+                                }
+
+                                <!-- BUTTONS -->
+
+                                <div class="d-flex flex-wrap gap-2">
+
+                                    @if (project.Table.Columns.Contains("ProjectUrl")
+                                        && project["ProjectUrl"] != DBNull.Value
+                                        && !string.IsNullOrWhiteSpace(
+                                            project["ProjectUrl"].ToString()))
+                                    {
+                                        <a href="@project["ProjectUrl"]"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           class="btn btn-primary btn-sm">
+
+                                            <i class="bi bi-box-arrow-up-right me-1"></i>
+                                            View Project
+
+                                        </a>
+                                    }
+
+                                    @if (project.Table.Columns.Contains("GithubUrl")
+                                        && project["GithubUrl"] != DBNull.Value
+                                        && !string.IsNullOrWhiteSpace(
+                                            project["GithubUrl"].ToString()))
+                                    {
+                                        <a href="@project["GithubUrl"]"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           class="btn btn-outline-dark btn-sm">
+
+                                            <i class="bi bi-github me-1"></i>
+                                            GitHub
+
+                                        </a>
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center text-secondary py-4">
+
+                    <i class="bi bi-folder2-open fs-1 d-block mb-3"></i>
+
+                    <p class="mb-0">
+                        No projects available.
+                    </p>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<!-- ================= TESTIMONIALS ================= -->
+
+<section id="testimonials" class="section-padding bg-light">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <p class="text-primary fw-bold mb-2">
+                TESTIMONIALS
+            </p>
+
+            <h2 class="fw-bold">
+                What People Say
+            </h2>
+
+            <p class="text-secondary mx-auto"
+               style="max-width:650px;">
+                Feedback and experiences shared by people I have worked with.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            @if (Model.Testimonials != null && Model.Testimonials.Rows.Count > 0)
+            {
+                foreach (System.Data.DataRow testimonial in Model.Testimonials.Rows)
+                {
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="card border-0 shadow-sm h-100">
+
+                            <div class="card-body p-4 d-flex flex-column">
+
+                                <!-- QUOTE -->
+
+                                <div class="mb-3">
+                                    <i class="bi bi-quote fs-1 text-primary"></i>
+                                </div>
+
+
+                                <!-- MESSAGE -->
+
+                                @if (testimonial.Table.Columns.Contains("message")
+                                    && testimonial["message"] != DBNull.Value
+                                    && !string.IsNullOrWhiteSpace(
+                                        testimonial["message"].ToString()))
+                                {
+                                    <p class="text-secondary lh-lg mb-4">
+                                        @testimonial["message"]
+                                    </p>
+                                }
+
+
+                                <!-- CLIENT -->
+
+                                <div class="mt-auto">
+
+                                    <div class="d-flex align-items-center gap-3">
+
+
+                                        <!-- CLIENT IMAGE -->
+
+                                        @if (testimonial.Table.Columns.Contains("clientImage")
+                                            && testimonial["clientImage"] != DBNull.Value
+                                            && !string.IsNullOrWhiteSpace(
+                                                testimonial["clientImage"].ToString()))
+                                        {
+                                            <img src="@Url.Content(testimonial["clientImage"].ToString())"
+                                                 alt="@testimonial["clientName"]"
+                                                 class="rounded-circle"
+                                                 style="width:55px;height:55px;object-fit:cover;"
+                                                 onerror="this.style.display='none';" />
+                                        }
+                                        else
+                                        {
+                                            <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center"
+                                                 style="width:55px;height:55px;">
+
+                                                <i class="bi bi-person fs-4"></i>
+
+                                            </div>
+                                        }
+
+
+                                        <!-- CLIENT DETAILS -->
+
+                                        <div>
+
+                                            @if (testimonial.Table.Columns.Contains("clientName")
+                                                && testimonial["clientName"] != DBNull.Value
+                                                && !string.IsNullOrWhiteSpace(
+                                                    testimonial["clientName"].ToString()))
+                                            {
+                                                <h6 class="fw-bold mb-0">
+                                                    @testimonial["clientName"]
+                                                </h6>
+                                            }
+
+
+                                            @if (testimonial.Table.Columns.Contains("designation")
+                                                && testimonial["designation"] != DBNull.Value
+                                                && !string.IsNullOrWhiteSpace(
+                                                    testimonial["designation"].ToString()))
+                                            {
+                                                <small class="text-muted">
+                                                    @testimonial["designation"]
+                                                </small>
+                                            }
+
+
+                                            @if (testimonial.Table.Columns.Contains("companyName")
+                                                && testimonial["companyName"] != DBNull.Value
+                                                && !string.IsNullOrWhiteSpace(
+                                                    testimonial["companyName"].ToString()))
+                                            {
+                                                <div class="small text-secondary">
+                                                    @testimonial["companyName"]
+                                                </div>
+                                            }
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- RATING -->
+
+                                    @if (testimonial.Table.Columns.Contains("rating")
+                                        && testimonial["rating"] != DBNull.Value)
+                                    {
+                                        int rating = Convert.ToInt32(testimonial["rating"]);
+
+                                        if (rating < 0)
+                                        {
+                                            rating = 0;
+                                        }
+
+                                        if (rating > 5)
+                                        {
+                                            rating = 5;
+                                        }
+
+                                        <div class="mt-3">
+
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                if (i <= rating)
+                                                {
+                                                    <i class="bi bi-star-fill text-warning"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="bi bi-star text-secondary"></i>
+                                                }
+                                            }
+
+                                        </div>
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center text-secondary py-4">
+
+                    <i class="bi bi-chat-quote fs-1 d-block mb-3"></i>
+
+                    <p class="mb-0">
+                        No testimonials available.
+                    </p>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================= CONTACT ================= -->
+
+<section id="contact" class="section-padding bg-dark text-white">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <p class="text-primary fw-bold mb-2">
+                CONTACT
+            </p>
+
+            <h2 class="fw-bold">
+                Let's Build Something Together
+            </h2>
+
+            <p class="text-white-50 mx-auto"
+               style="max-width:650px;">
+                Have a project or opportunity in mind?
+                Let's connect and discuss it.
+            </p>
+
+        </div>
+
+        <div class="row g-5">
+
+            <!-- CONTACT FORM -->
+
+            <div class="col-lg-7">
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-body p-4 p-lg-5">
+
+                        <h4 class="fw-bold text-dark mb-4">
+                            Send Me a Message
+                        </h4>
+
+                        @using (Html.BeginForm(
+                            "Contact",
+                            "Home",
+                            FormMethod.Post,
+                            new { @class = "contact-form" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="row g-3">
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label text-dark">
+                                        Name
+                                    </label>
+
+                                    @Html.TextBoxFor(
+                                        model => model.Contact.name,
+                                        new
+                                        {
+                                            @class = "form-control",
+                                            placeholder = "Your Name"
+                                        })
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label text-dark">
+                                        Email
+                                    </label>
+
+                                    @Html.TextBoxFor(
+                                        model => model.Contact.email,
+                                        new
+                                        {
+                                            @class = "form-control",
+                                            type = "email",
+                                            placeholder = "Your Email"
+                                        })
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label text-dark">
+                                        Phone
+                                    </label>
+
+                                    @Html.TextBoxFor(
+                                        model => model.Contact.phone,
+                                        new
+                                        {
+                                            @class = "form-control",
+                                            placeholder = "Your Phone"
+                                        })
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label text-dark">
+                                        Subject
+                                    </label>
+
+                                    @Html.TextBoxFor(
+                                        model => model.Contact.subject,
+                                        new
+                                        {
+                                            @class = "form-control",
+                                            placeholder = "Subject"
+                                        })
+
+                                </div>
+
+                                <div class="col-12">
+
+                                    <label class="form-label text-dark">
+                                        Message
+                                    </label>
+
+                                    @Html.TextAreaFor(
+                                        model => model.Contact.message,
+                                        new
+                                        {
+                                            @class = "form-control",
+                                            rows = "5",
+                                            placeholder = "Write your message..."
+                                        })
+
+                                </div>
+
+                                <div class="col-12">
+
+                                    <button type="submit"
+                                            class="btn btn-primary px-4">
+
+                                        <i class="bi bi-send me-2"></i>
+                                        Send Message
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTACT INFORMATION -->
+
+            <div class="col-lg-5">
+
+                <div class="card bg-transparent border-secondary text-white">
+
+                    <div class="card-body p-4">
+
+                        <h4 class="fw-bold mb-4">
+                            Contact Information
+                        </h4>
+
+                        <div class="d-flex gap-3 mb-4">
+
+                            <i class="bi bi-telephone fs-4 text-primary"></i>
+
+                            <div>
+
+                                <small class="text-white-50">
+                                    Mobile
+                                </small>
+
+                                <div>
+
+                                    @if (Model.Settings != null &&
+                                         !string.IsNullOrEmpty(Model.Settings.phone))
+                                    {
+                                        <a href="tel:@Model.Settings.phone"
+                                           class="text-white text-decoration-none">
+
+                                            @Model.Settings.phone
+
+                                        </a>
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="d-flex gap-3 mb-4">
+
+                            <i class="bi bi-envelope fs-4 text-primary"></i>
+
+                            <div>
+
+                                <small class="text-white-50">
+                                    Email
+                                </small>
+
+                                <div>
+
+                                    @if (Model.Settings != null &&
+                                         !string.IsNullOrEmpty(Model.Settings.email))
+                                    {
+                                        <a href="mailto:@Model.Settings.email"
+                                           class="text-white text-decoration-none">
+
+                                            @Model.Settings.email
+
+                                        </a>
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="d-flex gap-3 mb-4">
+
+                            <i class="bi bi-geo-alt fs-4 text-primary"></i>
+
+                            <div>
+
+                                <small class="text-white-50">
+                                    Location
+                                </small>
+
+                                <div>
+
+                                    @(Model.Settings != null
+                                        ? Model.Settings.address
+                                        : "India")
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="d-flex gap-3">
+
+                            <i class="bi bi-code-slash fs-4 text-primary"></i>
+
+                            <div>
+
+                                <small class="text-white-50">
+                                    Specialization
+                                </small>
+
+                                <div>
+                                    ASP.NET Full Stack Development
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- SOCIAL LINKS -->
+
+                        <div class="d-flex gap-2 mt-4">
+
+                            @if (Model.SocialLinks != null &&
+                                 Model.SocialLinks.Rows.Count > 0)
+                            {
+                                foreach (System.Data.DataRow social
+                                    in Model.SocialLinks.Rows)
+                                {
+                                    if (social.Table.Columns.Contains("url") &&
+                                        social["url"] != DBNull.Value &&
+                                        !string.IsNullOrWhiteSpace(
+                                            social["url"].ToString()))
+                                    {
+                                        <a href="@social["url"]"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           class="btn btn-outline-light rounded-circle">
+
+                                            @if (social.Table.Columns.Contains("icon") &&
+                                                 social["icon"] != DBNull.Value &&
+                                                 !string.IsNullOrWhiteSpace(
+                                                     social["icon"].ToString()))
+                                            {
+                                                <i class="@social["icon"]"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="bi bi-link-45deg"></i>
+                                            }
+
+                                        </a>
+                                    }
+                                }
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<style>
+    /* ================= ANIMATIONS ================= */
+
+    .reveal {
+        opacity: 0;
+        transform: translateY(35px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    .reveal-left {
+        opacity: 0;
+        transform: translateX(-40px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+    .reveal-right {
+        opacity: 0;
+        transform: translateX(40px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+
+    /* ================= CARD HOVER ================= */
+
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.10) !important;
+        }
+
+
+    /* ================= PROJECT IMAGE ================= */
+
+    .project-img {
+        height: 220px;
+        width: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .card:hover .project-img {
+        transform: scale(1.04);
+    }
+
+
+    /* ================= PROFILE IMAGE ================= */
+
+    .profile-img {
+        transition: transform 0.5s ease;
+    }
+
+        .profile-img:hover {
+            transform: scale(1.03);
+        }
+
+
+    /* ================= BUTTON ================= */
+
+    .btn {
+        transition: all 0.25s ease;
+    }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+
+    /* ================= SKILL ICON ================= */
+
+    .skill-icon {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    /* ================= ACCESSIBILITY ================= */
+
+    @@media (prefers-reduced-motion: reduce) {
+
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+
+        .reveal,
+        .reveal-left,
+        .reveal-right {
+            opacity: 1;
+            transform: none;
+        }
+    }
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const revealElements = document.querySelectorAll(
+            ".section-padding, .reveal, .reveal-left, .reveal-right"
+        );
+
+        const observer = new IntersectionObserver(
+            function (entries, observer) {
+
+                entries.forEach(function (entry) {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add("active");
+
+                        observer.unobserve(entry.target);
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.15
+            }
+        );
+
+        revealElements.forEach(function (element) {
+
+            if (element.classList.contains("section-padding")) {
+                element.classList.add("reveal");
+            }
+
+            observer.observe(element);
+        });
+
+    });
+</script>

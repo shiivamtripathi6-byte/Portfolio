@@ -1,0 +1,179 @@
+﻿@model Portfolio.Models.skillMaster
+@{
+    ViewBag.Title = string.IsNullOrEmpty(Model.id.ToString()) || Model.id == 0
+    ? "Add Skill"
+    : "Edit Skill";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid px-3">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="mb-1">
+                @(Model.id == 0 ? "Add Skill" : "Edit Skill")
+            </h4>
+            <p class="text-muted mb-0">
+                @(Model.id == 0 ? "Add a new skill to your portfolio." : "Update skill details.")
+            </p>
+        </div>
+
+        <a href="@Url.Action("ShowSkills", "Admin")" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <!-- Skill Form -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            @using (Html.BeginForm("ManageSkills", "Admin", FormMethod.Post, new { @class = "row g-3", id = "skillForm" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.id)
+
+                <!-- Skill Name -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Skill Name <span class="text-danger">*</span>
+                    </label>
+                    @Html.TextBoxFor(model => model.SkillName, new { @class = "form-control", placeholder = "e.g. ASP.NET MVC", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.SkillName, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Category -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Category <span class="text-danger">*</span>
+                    </label>
+                    @Html.DropDownListFor(model => model.Category, new List<SelectListItem>
+                        {
+                            new SelectListItem
+                            {
+                                Text = "-- Select Category --",
+                                Value = ""
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Frontend",
+                                Value = "Frontend"
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Backend",
+                                Value = "Backend"
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Database",
+                                Value = "Database"
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Programming Language",
+                                Value = "Programming Language"
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Tools",
+                                Value = "Tools"
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Other",
+                                Value = "Other"
+                            }
+                        },
+                        new { @class = "form-select" })
+                    @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+                </div>
+                <!-- Skill Level -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Skill Level
+                    </label>
+
+                    @Html.DropDownListFor(model => model.SkillLevel,
+                        new List<SelectListItem>
+                        {
+                            new SelectListItem
+                            {
+                                Text = "-- Select Level --",
+                                Value = ""
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Beginner",
+                                Value = "Beginner"
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Intermediate",
+                                Value = "Intermediate"
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Advanced",
+                                Value = "Advanced"
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Expert",
+                                Value = "Expert"
+                            }
+                        },
+                        new { @class = "form-select" })
+                    @Html.ValidationMessageFor(model => model.SkillLevel, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Display Order -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Display Order
+                    </label>
+                    @Html.TextBoxFor(model => model.DisplayOrder, new { @class = "form-control", type = "number", min = "1", placeholder = "e.g. 1" })
+                    @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Status -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Status <span class="text-danger">*</span>
+                    </label>
+
+                    @Html.DropDownListFor(model => model.Status, new List<SelectListItem>
+                     {
+                            new SelectListItem
+                            {
+                                Text = "Active",
+                                Value = "1"
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Inactive",
+                                Value = "0"
+                            }
+                        },
+                        new { @class = "form-select" })
+
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+                <!-- Buttons -->
+                <div class="col-12 mt-4">
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-lg"></i>
+                            @(Model.id == 0 ? "Save Skill" : "Update Skill")
+                        </button>
+
+                        <a href="@Url.Action("ShowSkills", "Admin")" class="btn btn-outline-secondary">
+                            Cancel
+                        </a>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,196 @@
+﻿@model Portfolio.Models.experienceMaster
+@{
+    ViewBag.Title = Model != null && Model.id > 0 ? "Edit Experience" : "Add Experience";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid px-3">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="mb-1">
+                @(Model != null && Model.id > 0 ? "Edit Experience" : "Add Experience")
+            </h4>
+            <small class="text-muted">
+                @(Model != null && Model.id > 0 ? "Update your professional experience details"
+                    : "Add your professional experience details")
+            </small>
+        </div>
+
+        <a href="@Url.Action("ShowExperience", "Admin")" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <!-- Experience Form -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+            @using (Html.BeginForm("ManageExperience", "Admin", FormMethod.Post, new { @class = "row g-3", id = "experienceForm" }))
+            {
+                @Html.HiddenFor(model => model.id)
+                <!-- Job Title -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Job Title <span class="text-danger">*</span>
+                    </label>
+
+                    @Html.TextBoxFor(model => model.JobTitle, new { @class = "form-control", placeholder = "e.g. Software Engineer" })
+                </div>
+
+                <!-- Company Name -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Company Name <span class="text-danger">*</span>
+                    </label>
+
+                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", placeholder = "e.g. ABC Technologies" })
+                </div>
+
+                <!-- Location -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Location
+                    </label>
+
+                    @Html.TextBoxFor(model => model.Location, new { @class = "form-control", placeholder = "e.g. Kanpur, Uttar Pradesh" })
+                </div>
+
+                <!-- Employment Type -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Employment Type
+                    </label>
+
+                    @Html.DropDownListFor(model => model.employmentType, new List<SelectListItem> {
+                            new SelectListItem
+                            {
+                                Text = "-- Select Employment Type --",
+                                Value = ""
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Full Time",
+                                Value = "Full Time"
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Part Time",
+                                Value = "Part Time"
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Internship",
+                                Value = "Internship"
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Contract",
+                                Value = "Contract"
+                            },
+                            new SelectListItem
+                            {
+                                Text = "Freelance",
+                                Value = "Freelance"
+                            }
+                        },
+                        new { @class = "form-select" })
+                </div>
+
+                <!-- Start Date -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Start Date <span class="text-danger">*</span>
+                    </label>
+
+                    @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control", type = "date" })
+                </div>
+
+                <!-- End Date -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        End Date
+                    </label>
+
+                    @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control", type = "date", id = "EndDate" })
+
+                    <div class="form-text">
+                        Leave blank if currently working.
+                    </div>
+                </div>
+                <!-- Currently Working -->
+                <div class="col-md-6">
+                    <div class="form-check mt-4">
+                        @Html.CheckBoxFor(model => model.IsCurrent, new { @class = "form-check-input", id = "IsCurrent" })
+
+                        <label class="form-check-label" for="IsCurrent">
+                            Currently working here
+                        </label>
+                    </div>
+
+                    <div class="form-text">
+                        Select this if you are currently working at this company.
+                    </div>
+                </div>
+                <!-- Description -->
+                <div class="col-12">
+                    <label class="form-label">
+                        Description
+                    </label>
+
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = "5", placeholder = "Describe your role, responsibilities and achievements..." })
+                </div>
+
+                <!-- Technologies -->
+                <div class="col-md-8">
+                    <label class="form-label">
+                        Technologies
+                    </label>
+
+                    @Html.TextBoxFor(model => model.Technologies, new { @class = "form-control", placeholder = "e.g. ASP.NET MVC, C#, SQL Server, JavaScript" })
+
+                    <div class="form-text">
+                        Separate technologies using commas.
+                    </div>
+                </div>
+
+                <!-- Company URL -->
+                <div class="col-md-4">
+                    <label class="form-label">
+                        Company URL
+                    </label>
+
+                    @Html.TextBoxFor(model => model.CompanyUrl, new { @class = "form-control", type = "url", placeholder = "https://example.com" })
+                </div>
+
+                <!-- Display Order -->
+                <div class="col-md-4">
+                    <label class="form-label">
+                        Display Order
+                    </label>
+
+                    @Html.TextBoxFor(model => model.DisplayOrder, new { @class = "form-control", type = "number", min = "1", placeholder = "1" })
+
+                    <div class="form-text">
+                        Lower number will appear first.
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="col-12 mt-4">
+                    <hr />
+                    <div class="d-flex gap-2 justify-content-end">
+
+                        <a href="@Url.Action("ShowExperience", "Admin")" class="btn btn-light border">
+                            Cancel
+                        </a>
+
+                        <button type="submit" class="btn btn-primary" id="btnSaveExperience">
+                            <i class="bi bi-check-circle"></i>
+                            @(Model != null && Model.id > 0 ? "Update Experience" : "Save Experience")
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

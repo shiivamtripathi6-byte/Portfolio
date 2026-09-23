@@ -1,0 +1,104 @@
+﻿@model Portfolio.Models.socialLinkMaster
+@{
+    ViewBag.Title = Model.id == 0 ? "Add Social Link" : "Edit Social Link";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid px-3">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-1">
+                @(Model.id == 0 ? "Add Social Link" : "Edit Social Link")
+            </h3>
+
+            <p class="text-muted mb-0">
+                Manage your portfolio social media links.
+            </p>
+        </div>
+
+        <a href="@Url.Action("ShowSocialLinks", "Admin")" class="btn btn-secondary">
+            <i class="bi bi-arrow-left me-1"></i>
+            Back
+        </a>
+    </div>
+    <!-- Form -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            @using (Html.BeginForm("SocialLink", "Admin", FormMethod.Post, new { @class = "row g-3" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.id)
+                <!-- Platform Name -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Platform Name
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    @Html.TextBoxFor(model => model.platformName, new { @class = "form-control", placeholder = "e.g. GitHub, LinkedIn, Instagram" })
+                    @Html.ValidationMessageFor(model => model.platformName, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Icon -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Icon
+                    </label>
+
+                    @Html.TextBoxFor(model => model.icon, new { @class = "form-control", placeholder = "e.g. bi bi-github" })
+
+                    <small class="text-muted">
+                        Bootstrap Icon class, e.g. bi bi-github
+                    </small>
+
+                </div>
+
+                <!-- URL -->
+                <div class="col-12">
+
+                    <label class="form-label">
+                        Profile URL
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    @Html.TextBoxFor(model => model.url, new { @class = "form-control", placeholder = "https://github.com/username" })
+                    @Html.ValidationMessageFor(model => model.url, "", new { @class = "text-danger" })
+
+                </div>
+
+                <!-- Status -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Status
+                    </label>
+                    @Html.DropDownListFor(model => model.status, new SelectList(
+                            new[]
+                            {
+                                new { Value = 1, Text = "Active" },
+                                new { Value = 0, Text = "Inactive" }
+                            },
+                            "Value",
+                            "Text",
+                            Model.status
+                        ),
+                        "-- Select Status --",
+                        new { @class = "form-select" })
+
+                </div>
+
+                <!-- Buttons -->
+                <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-lg me-1"></i>
+                        @(Model.id == 0 ? "Save Social Link" : "Update Social Link")
+                    </button>
+
+                    <a href="@Url.Action("ShowLinks", "Admin")" class="btn btn-light border ms-2">
+                        Cancel
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

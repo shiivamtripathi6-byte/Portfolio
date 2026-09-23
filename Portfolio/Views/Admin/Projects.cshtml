@@ -1,0 +1,188 @@
+﻿@model Portfolio.Models.projectMaster
+@{
+    ViewBag.Title = "Projects";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    bool isEdit = Model != null && Model.id > 0;
+}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show py-2 px-3 small" role="alert">
+        <i class="bi bi-check-circle-fill me-1"></i> @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="padding: 0.8rem 1rem;"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show py-2 px-3 small" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-1"></i> @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="padding: 0.8rem 1rem;"></button>
+    </div>
+}
+
+<div class="container-fluid px-3">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="@Url.Action("ShowProjects", "Admin")" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+    @using (Html.BeginForm("Projects", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <!-- Left Side -->
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white py-3">
+                        <h6 class="mb-0">
+                            <i class="bi bi-folder-plus me-2"></i>
+                            Project Information
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <!-- Project Name -->
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.ProjectName, new { @class = "form-label fw-semibold" })
+                            @Html.TextBoxFor(model => model.ProjectName, new { @class = "form-control", placeholder = "Enter project name" })
+                            @Html.ValidationMessageFor(model => model.ProjectName, "", new { @class = "text-danger small" })
+                        </div>
+                        <!-- Description -->
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.ShortDescription, new { @class = "form-label fw-semibold" })
+                            @Html.TextAreaFor(model => model.ShortDescription, new { @class = "form-control", rows = "5", placeholder = "Describe your project..." })
+                            @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger small" })
+                        </div>
+                        <!-- Technologies -->
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.Technologies, new { @class = "form-label fw-semibold" })
+                            @Html.TextBoxFor(model => model.Technologies, new { @class = "form-control", placeholder = "ASP.NET MVC, C#, SQL Server, Bootstrap" })
+                            <small class="text-muted">
+                                Separate technologies using comma.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <!-- Links -->
+                <div class="card border-0 shadow-sm mb-4">
+
+                    <div class="card-header bg-white py-3">
+                        <h6 class="mb-0">
+                            <i class="bi bi-link-45deg me-2"></i>
+                            Project Links
+                        </h6>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- GitHub -->
+                            <div class="col-md-6 mb-3">
+                                @Html.LabelFor(model => model.GithubUrl, new { @class = "form-label fw-semibold" })
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-github"></i>
+                                    </span>
+                                    @Html.TextBoxFor(model => model.GithubUrl, new { @class = "form-control", placeholder = "https://github.com/..." })
+                                </div>
+                            </div>
+                            <!-- Live Demo -->
+                            <div class="col-md-6 mb-3">
+                                @Html.LabelFor(model => model.ProjectUrl, new { @class = "form-label fw-semibold" })
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-globe"></i>
+                                    </span>
+                                    @Html.TextBoxFor(model => model.ProjectUrl, new { @class = "form-control", placeholder = "https://example.com" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Side -->
+            <div class="col-lg-4">
+
+                <!-- Image -->
+                <div class="card border-0 shadow-sm mb-4">
+
+                    <div class="card-header bg-white py-3">
+                        <h6 class="mb-0">
+                            <i class="bi bi-image me-2"></i>
+                            Project Image
+                        </h6>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="border rounded p-3 text-center mb-3" style="min-height:180px;">
+                            <img id="imagePreview" src="" style="max-width:100%; max-height:160px; display:none;" class="rounded" />
+                            <div id="imagePlaceholder" class="text-muted pt-5">
+                                <i class="bi bi-image fs-1"></i>
+                                <div class="mt-2">
+                                    No image selected
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="form-label fw-semibold">
+                            Upload Image
+                        </label>
+                        <input type="file" name="imageFile" id="ProjectImage" class="form-control" accept="image/*" />
+                       
+                        <small class="text-muted">
+                            JPG, PNG or WEBP
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Save Card -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+
+                        <button type="submit" class="btn btn-primary w-100 mb-2">
+                            <i class="bi bi-check-lg me-1"></i>
+
+                            @(isEdit ? "Update Project" : "Save Project")
+                        </button>
+
+                        <a href="@Url.Action("ShowProjects", "Admin")"
+                           class="btn btn-light border w-100">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+            document.getElementById("ProjectImage").addEventListener("change", function (e) {
+
+                var file = e.target.files[0];
+
+                if (!file) {
+                    return;
+                }
+
+                var reader = new FileReader();
+
+                reader.onload = function (event) {
+
+                    document.getElementById("imagePreview").src =
+                        event.target.result;
+
+                    document.getElementById("imagePreview").style.display =
+                        "block";
+
+                    document.getElementById("imagePlaceholder").style.display =
+                        "none";
+                };
+
+                reader.readAsDataURL(file);
+
+            });
+</script>
+
+
+
+
